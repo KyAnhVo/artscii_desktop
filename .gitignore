@@ -1,0 +1,26 @@
+/*
+
+# include dirs
+!/include
+!/include/**
+!/include_qt
+!/include_qt/**
+
+# src dirs
+!/src
+!/src/**
+!/src_qt
+!/src_qt/**
+
+# output dirs
+!/mac_os
+!/mac_os/**
+!/windows
+!/windows/**
+!/linux_x86_64
+!/linux_x86_64/**
+
+# Utility files
+!/CMakeLists.txt
+!/.gitignore
+!/.clangd
