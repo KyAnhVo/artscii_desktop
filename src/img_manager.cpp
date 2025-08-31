@@ -22,6 +22,7 @@ Img_Manager::Img_Manager(const Img_Manager& other) {
     this->height = other.height;
     uint64_t area =
         static_cast<uint64_t>(this->width) * static_cast<uint64_t>(this->height) * 4;
+    this->rgba = new uint8_t[area];
     for (uint64_t i = 0; i < area; i++)
         this->rgba[i] = other.rgba[i];
 }

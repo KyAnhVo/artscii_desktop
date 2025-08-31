@@ -5,6 +5,8 @@
 #include <QPlainTextEdit>
 #include <QSlider>
 #include <QPushButton>
+#include <QLabel>
+#include <QLineEdit>
 
 class Main_Window : public QMainWindow {
     Q_OBJECT
@@ -14,9 +16,14 @@ public:
     ~Main_Window();
 
 public slots:
+    // buttons clicked slots
     void on_open_file_button_clicked();
     void on_preview_button_clicked();
     void on_save_button_clicked(); 
+
+    // sliders adjusted slots
+    void on_zoom_slider_changed();
+    void on_brightness_slider_changed();
 
 private:
     // buttons
@@ -27,7 +34,16 @@ private:
     QSlider * zoom_slider,
             * brightness_slider;
     // main preview section
-    QTextEdit * preview_text_edit;
+    QPlainTextEdit * preview_text_edit;
+
+    // labels, info text boxes, etc.
+    QLabel * zoom_label,
+           * brightness_label;
+    QLineEdit * link_box;
+
+    // util functions
+    void setup_layout();
+    void setup_main_widgets();
 };
 
 #endif
