@@ -2,7 +2,32 @@
 #define MAIN_WINDOW_H
 
 #include <QMainWindow>
+#include <QPlainTextEdit>
+#include <QSlider>
+#include <QPushButton>
 
+class Main_Window : public QMainWindow {
+    Q_OBJECT
 
+public:
+    Main_Window(QWidget * parent=nullptr);
+    ~Main_Window();
+
+public slots:
+    void on_open_file_button_clicked();
+    void on_preview_button_clicked();
+    void on_save_button_clicked(); 
+
+private:
+    // buttons
+    QPushButton * open_file_button, 
+                * preview_button, 
+                * save_button;
+    // sliders
+    QSlider * zoom_slider,
+            * brightness_slider;
+    // main preview section
+    QTextEdit * preview_text_edit;
+};
 
 #endif
