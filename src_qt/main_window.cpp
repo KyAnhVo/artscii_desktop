@@ -10,6 +10,15 @@ Main_Window::Main_Window(QWidget * parent) : QMainWindow(parent) {
     this->setup_layout();
 };
 
+Main_Window::~Main_Window() {}
+
+// Slots
+void Main_Window::on_open_file_button_clicked() {}
+void Main_Window::on_preview_button_clicked() {}
+void Main_Window::on_save_button_clicked() {}
+void Main_Window::on_brightness_slider_changed() {}
+void Main_Window::on_zoom_slider_changed() {}
+
 void Main_Window::setup_main_widgets() {
     // open file button
     this->open_file_button = new QPushButton(tr("Open file"));
