@@ -18,14 +18,16 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/include_qt
 )
 
-# Source Directories
+# Source and Header Directories
 file(GLOB_RECURSE SRC_FILES
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
-)
-file(GLOB_RECURSE SRC_QT_FILES
     "${CMAKE_SOURCE_DIR}/src_qt/*.cpp"
 )
-add_executable(artscii_desktop ${SRC_FILES} ${SRC_QT_FILES})
+file(GLOB_RECURSE HEADER_FILES
+    "${CMAKE_SOURCE_DIR}/include/*.h"
+    "${CMAKE_SOURCE_DIR}/include_qt/*.h"
+)
+add_executable(artscii_desktop ${SRC_FILES} ${HEADER_FILES})
 
 # Link libraries from outside installs
 target_link_libraries(artscii_desktop PRIVATE 
