@@ -8,6 +8,10 @@
 #include <QLabel>
 #include <QLineEdit>
 
+#include "png_decoder.h"
+#include "img_manager.h"
+#include "artscii_processor.h"
+
 class Main_Window : public QMainWindow {
     Q_OBJECT
 
@@ -26,6 +30,10 @@ public slots:
     void on_brightness_slider_changed();
 
 private:
+    char current_file[100];
+    Img_Manager * original_image, * preview_image, * saved_image;
+    int font_width, font_height;
+
     // buttons
     QPushButton * open_file_button, 
                 * preview_button, 

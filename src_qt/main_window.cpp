@@ -1,23 +1,56 @@
 #include "main_window.h"
+#include "artscii_processor.h"
+#include "png_decoder.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
-#include <qboxlayout.h>
+#include <QBoxLayout>
+#include <QString>
+#include <QFileDialog>
+
+#include <iostream>
 
 Main_Window::Main_Window(QWidget * parent) : QMainWindow(parent) {
+    this->original_image    = nullptr;
+    this->preview_image     = nullptr;
+    this->saved_image       = nullptr;
+
     this->setup_main_widgets();
     this->setup_layout();
 };
 
 Main_Window::~Main_Window() {}
 
-// Slots
-void Main_Window::on_open_file_button_clicked() {}
+/**
+ * Slot functions
+ */
+
+void Main_Window::on_open_file_button_clicked() {
+    QString file_name = QFileDialog::getOpenFileName(
+            this, 
+            tr("Choose image"), 
+            QDir::currentPath(),
+            "Images (*.png *.jpg *.jpeg)"
+            );
+    if (file_name.length() == 0) {
+        return;
+    }
+
+    if (this->original_image != nullptr) delete this->original_image;
+    if (this->preview_image != nullptr) delete this->preview_image;
+    if (this->saved_image != nullptr) delete this->saved_image;
+
+    Png_Input * png_input   = new Png_Input(file_name.toStdString());
+    this->original_image    = png_input->read_image();
+
+}
 void Main_Window::on_preview_button_clicked() {}
 void Main_Window::on_save_button_clicked() {}
 void Main_Window::on_brightness_slider_changed() {}
 void Main_Window::on_zoom_slider_changed() {}
+
+// Util functions
 
 void Main_Window::setup_main_widgets() {
     // open file button
@@ -59,10 +92,21 @@ void Main_Window::setup_main_widgets() {
             this, &Main_Window::on_brightness_slider_changed
             );
 
-    // preview text box
-    this->preview_text_edit = new QPlainTextEdit();
+    // Font preprocessing and check monospacing
     QFont font("Monospace", 1);
     font.setStyleHint(QFont::Monospace);
+    QFontMetrics font_metrics(font);
+    this->font_height   = font_metrics.height();
+    this->font_width    = font_metrics.horizontalAdvance(' ');
+    for (int i = 0; i < 8; i++) {
+        if (font_metrics.horizontalAdvance(Artscii_Processor::artscii_chars[i]) != this->font_width) {
+            std::cerr << "Program cannot identify monospace font for ascii art" << std::endl;
+            exit(1);
+        }
+    }
+
+    // preview text box
+    this->preview_text_edit = new QPlainTextEdit();
     this->preview_text_edit->setFont(font);
 
     // info labels and text boxes
