@@ -20,7 +20,7 @@ public:
     /**
      * @brief create Img_Manager object that is a deep copy of another Img_Manager object
      */
-    Img_Manager(const Img_Manager&);
+    Img_Manager(Img_Manager *);
 
     /**
      * @brief destruct the current Img_Manager object and its rgba array.

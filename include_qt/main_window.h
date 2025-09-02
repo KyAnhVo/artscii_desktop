@@ -46,7 +46,9 @@ private:
 
     // labels, info text boxes, etc.
     QLabel * zoom_label,
-           * brightness_label;
+           * brightness_label,
+           * zoom_val_label,
+           * brightness_val_label;
     QLineEdit * link_box;
 
     // util functions

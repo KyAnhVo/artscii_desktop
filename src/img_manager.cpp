@@ -17,14 +17,14 @@ Img_Manager::Img_Manager(uint32_t height, uint32_t width) {
     this->rgba      = new uint8_t[area * 4]; // because r, g, b, a is 4 vals.
 }
 
-Img_Manager::Img_Manager(const Img_Manager& other) {
-    this->width = other.width;
-    this->height = other.height;
+Img_Manager::Img_Manager(Img_Manager * other) {
+    this->width = other->width;
+    this->height = other->height;
     uint64_t area =
         static_cast<uint64_t>(this->width) * static_cast<uint64_t>(this->height) * 4;
     this->rgba = new uint8_t[area];
     for (uint64_t i = 0; i < area; i++)
-        this->rgba[i] = other.rgba[i];
+        this->rgba[i] = other->rgba[i];
 }
 
 Img_Manager::~Img_Manager() {
