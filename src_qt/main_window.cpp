@@ -277,5 +277,5 @@ QString to_png(QString original) {
         std::cerr << "conversion to png failed" << std::endl;
         return "";
     }
-    return "/tmp/artscii_converted_output";
+    return "/tmp/artscii_converted_output.png";
 }
