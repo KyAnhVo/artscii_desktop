@@ -8,7 +8,6 @@
 #include <QLabel>
 #include <QLineEdit>
 
-#include "png_decoder.h"
 #include "img_manager.h"
 #include "artscii_processor.h"
 
