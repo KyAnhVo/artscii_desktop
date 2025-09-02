@@ -76,7 +76,9 @@ void Main_Window::on_open_file_button_clicked() {
     this->original_image    = png_input->read_image();
 
     this->preview_image     = new Img_Manager(original_image);
-    this->preview_image->downsize(this->font_height * 2, this->font_width * 2);
+    this->preview_image->downsize(
+            this->font_height * ZOOM_DEFAULT * 0.001, 
+            this->font_width * ZOOM_DEFAULT * 0.001);
 
     std::cout << "resized" << std::endl;
 
@@ -95,10 +97,14 @@ void Main_Window::on_open_file_button_clicked() {
     std::cout << "done constructing print_arr" << std::endl;
     this->preview_text_edit->clear();
     this->preview_text_edit->appendPlainText(print_arr);
+    
+    this->zoom_slider->setValue(ZOOM_DEFAULT);
+    this->brightness_slider->setValue(BRIGHTNESS_DEFAULT);
 
     delete artscii;
     delete artscii_arr;
 }
+
 void Main_Window::on_preview_button_clicked() {
     if (this->original_image == nullptr) {
         QMessageBox msg_box;
@@ -109,8 +115,8 @@ void Main_Window::on_preview_button_clicked() {
     if (this->preview_image != nullptr) delete this->preview_image;
     this->preview_image = new Img_Manager(this->original_image);
     
-    double height_downsize  = this->font_height * this->zoom_slider->value() * 0.01;
-    double width_downsize   = this->font_width * this->zoom_slider->value() * 0.01;
+    double height_downsize  = this->font_height * this->zoom_slider->value() * 0.001;
+    double width_downsize   = this->font_width * this->zoom_slider->value() * 0.001;
     this->preview_image->downsize(height_downsize, width_downsize);
 
     Artscii_Processor * artscii = this->preview_image->luminance(0, 0, 0);
@@ -133,9 +139,19 @@ void Main_Window::on_preview_button_clicked() {
     delete artscii;
     delete artscii_arr;
 }
+
 void Main_Window::on_save_button_clicked() {}
-void Main_Window::on_brightness_slider_changed() {}
-void Main_Window::on_zoom_slider_changed() {}
+void Main_Window::on_brightness_slider_changed() {
+    this->brightness_val_label->setText(
+            QString::fromStdString(
+                std::to_string(this->brightness_slider->value())));
+}
+
+void Main_Window::on_zoom_slider_changed() {
+    this->zoom_val_label->setText(
+            QString::fromStdString(
+                std::to_string(this->zoom_slider->value())));
+}
 
 
 
