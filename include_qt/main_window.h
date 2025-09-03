@@ -32,6 +32,7 @@ private:
     char current_file[100];
     Img_Manager * original_image, * preview_image, * saved_image;
     int font_width, font_height;
+    QString current_path;
 
     // buttons
     QPushButton * open_file_button, 

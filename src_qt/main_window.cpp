@@ -46,9 +46,13 @@ void Main_Window::on_open_file_button_clicked() {
     QString file_name = QFileDialog::getOpenFileName(
             this, 
             "Choose image", 
-            QDir::currentPath(),
+            this->current_path,
             "Images (*.png *.jpg *.jpeg)"
             );
+    QString current_path = QFileInfo(file_name).absoluteDir().path();
+    if (this->current_path != current_path) {
+        this->current_path = current_path;
+    }
     if (file_name.length() == 0) {
         return;
     }
@@ -140,7 +144,19 @@ void Main_Window::on_preview_button_clicked() {
     delete artscii_arr;
 }
 
-void Main_Window::on_save_button_clicked() {}
+void Main_Window::on_save_button_clicked() {
+    QString file_name = QFileDialog::getSaveFileName(
+            this, tr("Choose save file"),
+            this->current_path,
+            tr("Images (*.png)")
+            );
+    QString current_path = QFileInfo(file_name).absoluteDir().path();
+    if (this->current_path != current_path) {
+        this->current_path = current_path;
+    }
+
+}
+
 void Main_Window::on_brightness_slider_changed() {
     this->brightness_val_label->setText(
             QString::fromStdString(
@@ -235,6 +251,8 @@ void Main_Window::setup_main_widgets() {
     this->zoom_val_label        = new QLabel(QString::fromStdString(std::to_string(this->zoom_slider->value())));
     this->brightness_val_label  = new QLabel(QString::fromStdString(std::to_string(this->brightness_slider->value())));
 
+    // utils
+    this->current_path = QDir::currentPath();
 }
 
 void Main_Window::setup_layout() {
